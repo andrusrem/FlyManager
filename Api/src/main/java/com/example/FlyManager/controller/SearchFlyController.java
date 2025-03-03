@@ -1,19 +1,35 @@
 package com.example.flymanager.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.flymanager.model.SearchFly;
+import com.example.flymanager.service.SearchFlyService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/api/search")
 public class SearchFlyController {
-    
-    @PostMapping
-    public SearchFly createSearchRequest(@RequestBody SearchFly searchFly) {
-        return null; //in development
-    }  
+    @Autowired
+    private final SearchFlyService searchFlyService;
+
+    public SearchFlyController(SearchFlyService searchFlyService)
+    {
+        this.searchFlyService = searchFlyService;
+    }
+
+    @GetMapping
+    public Mono<String> createSearchRequest(
+        @RequestParam String origin,
+        @RequestParam String destination,
+        @RequestParam String departureDate,
+        @RequestParam(required = false) String returnDate,
+        @RequestParam String token
+        ) 
+    {
+        return searchFlyService.getSearchedFlies(origin, destination, departureDate, returnDate, token);
+    }
 }
