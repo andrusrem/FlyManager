@@ -23,19 +23,19 @@ public class SearchFlyService {
         this.webClient = webClient;
     }
 
-    public Mono<String> getSearchedFlies(String origin, String destination, String departureDate, String returnDate, String token) {
+    public Mono<String> getSearchedFlies(String origin, String destination, String departureDate, String returnDate, String token, String oneWay, String direct, String sorting) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/city-directions")
+                        .path("/prices_for_dates")
                         .queryParam("origin", origin)
                         .queryParam("destination", destination)
                         .queryParam("departure_at", departureDate)
                         .queryParam("return_at", returnDate)
-                        .queryParam("one_way", false)
-                        .queryParam("sorting", "price")
-                        .queryParam("direct", false)
+                        .queryParam("one_way", oneWay)
+                        .queryParam("direct", direct)
                         .queryParam("currency", "eur")
-                        .queryParam("limit", 30)
+                        .queryParam("limit", 100)
+                        .queryParam("sorting", sorting)
                         .queryParam("page", 1)
                         .queryParam("token", token)
                         .build())

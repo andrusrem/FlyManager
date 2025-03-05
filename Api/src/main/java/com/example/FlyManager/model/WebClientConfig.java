@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
-    private static final String BASE_URL = "https://api.travelpayouts.com/aviasales/v1";
+    private static final String BASE_URL = "https://api.travelpayouts.com/aviasales/v3";
 
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
