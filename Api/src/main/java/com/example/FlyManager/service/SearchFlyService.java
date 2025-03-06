@@ -23,27 +23,26 @@ public class SearchFlyService {
         this.webClient = webClient;
     }
 
-    public Mono<String> getSearchedFlies(String origin, String destination, String departureDate, String returnDate, String token, String oneWay, String direct, String sorting) {
+    public Mono<String> getSearchedFlies(String origin, String destination, String departureDate, String periodType, String token, String oneWay, String tripClass, String sorting) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/prices_for_dates")
+                        .path("/get_latest_prices")
+                        .queryParam("currency", "eur")
                         .queryParam("origin", origin)
                         .queryParam("destination", destination)
-                        .queryParam("departure_at", departureDate)
-                        .queryParam("return_at", returnDate)
+                        .queryParam("beginning_of_period", departureDate)
+                        .queryParam("period_type", periodType)
                         .queryParam("one_way", oneWay)
-                        .queryParam("direct", direct)
-                        .queryParam("currency", "eur")
-                        .queryParam("limit", 100)
-                        .queryParam("sorting", sorting)
                         .queryParam("page", 1)
+                        .queryParam("sorting", sorting)
+                        .queryParam("trip_class", tripClass)
                         .queryParam("token", token)
                         .build())
                 .retrieve()
                 .bodyToMono(String.class);
     }
 
-    public HttpResponse<String> getAITACities() throws URISyntaxException
+    public HttpResponse<String> getAITACities(String name) throws URISyntaxException
     {
         URI obj = new URI("https://api.travelpayouts.com/data/en/cities.json?_gl=1*15izib6*_ga*MTI4OTQ4NjM1NS4xNzQwODQ3NDc3*_ga_1WLL0NEBEH*MTc0MDg0NzQ3Ni4xLjEuMTc0MDg1MzIwMC4xMi4wLjA.%20AITA%20airports:%20https://api.travelpayouts.com/data/en/airports.json?");
         try {
