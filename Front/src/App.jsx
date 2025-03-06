@@ -7,7 +7,7 @@ import './App.css'
 import FlightChoose from './FlightChoose';
 
 function App() {
-  const [searchData, setSearchData] = useState({})
+  const [searchData, setSearchData] = useState(null)
 
 
   const handleSearchSubmit = (data) => {
