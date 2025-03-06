@@ -25,3 +25,12 @@ Because I already used it in the past and for this time one new framework is eno
 ### On fourth day:
 I had problem with request (request was forbidden) to Api, because CORS policy, but I solve it after litle research
 Now I have problem on client side of the project, this is Bad Request error.
+
+### On fifth day:
+I solve problems with data in front side, but I realized, that this request is quite not suit for this assignment.
+Because Aviasales Api /places_for_dates request gives only flight data for next 48 hours.
+
+I have a idea to use get_latest_prices request and then I can get flight info for specific period of time,
+that user choose in Search component. And so I can show to user list of flights.
+
+So if user ask flight for specific date and there is no flight, then 

@@ -27,14 +27,14 @@ public class SearchFlyController {
         @RequestParam String origin,
         @RequestParam String destination,
         @RequestParam String departureDate,
-        @RequestParam(required = false) String returnDate,
-        @RequestParam(required = false) String oneWay,
-        @RequestParam(required = false) String direct,
+        @RequestParam String periodType,
+        @RequestParam String oneWay,
+        @RequestParam String tripClass,
         @RequestParam String sorting,
         @RequestParam String token
     ) 
     {
-        return searchFlyService.getSearchedFlies(origin, destination, departureDate, returnDate, token, oneWay, direct, sorting);
+        return searchFlyService.getSearchedFlies(origin, destination, departureDate, periodType, token, oneWay, tripClass, sorting);
     }
 
     @GetMapping("/cities")
