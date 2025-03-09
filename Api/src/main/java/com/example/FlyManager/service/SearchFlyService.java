@@ -1,24 +1,31 @@
 package com.example.flymanager.service;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.util.List;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.example.flymanager.model.City;
 import com.example.flymanager.model.SearchFly;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import reactor.core.publisher.Mono;
 
 @Service
 public class SearchFlyService {
     private final WebClient webClient;
-
+    private final ObjectMapper objectMapper = new ObjectMapper();
     public SearchFlyService(WebClient webClient) {
         this.webClient = webClient;
     }
@@ -42,22 +49,20 @@ public class SearchFlyService {
                 .bodyToMono(String.class);
     }
 
-    public HttpResponse<String> getAITACities(String name) throws URISyntaxException
+    public ResponseEntity<List<City>> getIATACities() throws IOException 
     {
-        URI obj = new URI("https://api.travelpayouts.com/data/en/cities.json?_gl=1*15izib6*_ga*MTI4OTQ4NjM1NS4xNzQwODQ3NDc3*_ga_1WLL0NEBEH*MTc0MDg0NzQ3Ni4xLjEuMTc0MDg1MzIwMC4xMi4wLjA.%20AITA%20airports:%20https://api.travelpayouts.com/data/en/airports.json?");
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(obj)
-                .header("Accept", "application/json")
-                .GET()
-                .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return response;
-        } catch (IOException | InterruptedException e) {
-        }
-        return null; 
+        File file = new ClassPathResource("static/cities.json").getFile();
+
+        // Read the file content as a string
+        String content = new String(Files.readAllBytes(file.toPath()));
+
+        // Deserialize JSON content to a List of City objects
+        List<City> cities = objectMapper.readValue(content, objectMapper.getTypeFactory().constructCollectionType(List.class, City.class));
+
+        // Return the List of City objects as a JSON response
+        return ResponseEntity.ok(cities);
     }
+    
     public HttpResponse<String> getAITAAirports() throws URISyntaxException
     {
         URI obj = new URI("https://api.travelpayouts.com/data/en/airports.json?_gl=1*4dqzxy*_ga*MTI4OTQ4NjM1NS4xNzQwODQ3NDc3*_ga_1WLL0NEBEH*MTc0MDg0NzQ3Ni4xLjEuMTc0MDg1NDA1OS42MC4wLjA.");
