@@ -23,7 +23,7 @@ https://docs.spring.io/spring-framework/reference/web/webflux-webclient.html
 Because I already used it in the past and for this time one new framework is enough.
 
 ### On fourth day:
-I had problem with request (request was forbidden) to Api, because CORS policy, but I solve it after litle research
+I had problem with request (request was forbidden) to Api, because CORS policy, but I solve it after little research
 Now I have problem on client side of the project, this is Bad Request error.
 
 ### On fifth day:
@@ -33,4 +33,12 @@ Because Aviasales Api /places_for_dates request gives only flight data for next 
 I have a idea to use get_latest_prices request and then I can get flight info for specific period of time,
 that user choose in Search component. And so I can show to user list of flights.
 
-So if user ask flight for specific date and there is no flight, then 
+So if user ask flight for specific date and there is no flight, then he will get some options in same month.
+
+### On sixth and seventh day:
+This time I needed to give the user chance to search origin location and destination by himself so,
+that Api also get right IATA code of this particular location and Select also must have some options from to choose.
+
+I used cities JSON provided in Aviasales Api docs, but when I applied options to React Select, there was so many options,
+that now I have problem with optimization, because React rerender page and with thousands of options page freeze and slow...
+
