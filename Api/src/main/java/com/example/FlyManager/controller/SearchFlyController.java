@@ -43,7 +43,7 @@ public class SearchFlyController {
 
     @GetMapping("/cities")
     public ResponseEntity<List<City>> getCities() throws IOException {
-        return searchFlyService.getAITACities();
+        return searchFlyService.getIATACities();
     }
     
 }
